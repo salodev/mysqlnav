@@ -1,6 +1,18 @@
 <?php
 set_time_limit(0);
-require_once(dirname(dirname(dirname(__FILE__))).'/repos/autoload.php');
+spl_autoload_register(function($className) {
+	$baseDir = dirname(dirname(dirname(__FILE__))) . '/repos';
+	$className = str_replace('\\','/', $className);
+    $classFile = "{$baseDir}/{$className}.class.php";
+    if (file_exists($classFile)) {
+        require_once($classFile);
+		return;
+	}
+	$interfaceFile = "{$baseDir}/{$className}.interface.php";
+	if (file_exists($interfaceFile)) {
+		require_once($interfaceFile);
+	}
+});
 spl_autoload_register(function($className) {
 	$className = str_replace('\\','/', $className);
     $classFile = dirname(__FILE__) . "/lib/{$className}.class.php";
