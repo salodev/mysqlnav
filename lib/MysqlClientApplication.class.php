@@ -1,6 +1,9 @@
 <?php
 
-class MysqlClientApplication extends cuif\Application {
+class MysqlClientApplication extends cuif\Application {	
+	
+	static private $_StoreFile;
+	
 	public function main() {
 		$this->openWindow('ConnectionsWindow');
 		$this->bind('keyPress_ESCAPE', function() {
@@ -48,11 +51,10 @@ class MysqlClientApplication extends cuif\Application {
 	}
 	
 	public function getConnectionsList() {
-		$file = dirname(__FILE__).'/login.json';
-		if (!is_file($file)) {
+		if (!is_file(self::$_StoreFile)) {
 			return array();
 		}
-		return json_decode(file_get_contents($file), true);
+		return json_decode(file_get_contents(self::$_StoreFile), true);
 	}
 	
 	public function storeNewConnection($name, $host, $user, $pass, $db) {
@@ -68,6 +70,10 @@ class MysqlClientApplication extends cuif\Application {
 			'db'=>$db,
 		);
 		
-		file_put_contents(dirname(__FILE__).'/login.json', json_encode($connectionsList), FILE_IGNORE_NEW_LINES);
+		file_put_contents(self::$_StoreFile, json_encode($connectionsList), FILE_IGNORE_NEW_LINES);
+	}
+	
+	static public function SetStoreFile($filePath) {
+		self::$_StoreFile = $filePath;
 	}
 }
