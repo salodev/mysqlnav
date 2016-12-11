@@ -24,3 +24,7 @@ And enjoy exec!
 ```
 ./mysqlnav.php
 ```
+# About It
+It was an test application, used to develop CUIF (php console user interface framework)... So.. is not a complete application. It serves as a demo of that you can do with CUIF.
+
+Exploring code is easy to learn how CUIF wors!.
