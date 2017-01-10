@@ -17,7 +17,7 @@ class DatabasesListWindow extends cuif\Window {
 				'connection' => $this->_connection,
 			));
 		});
-		$this->keyPress('+', function() {
+		$this->keyPress('+|F7', function() {
 			$this->_application->promptWindow('Create Database', 'Name', null, function($name) {
 				$this->_connection->query("CREATE DATABASE {$name};", function() use ($name) {
 					$this->updateList();
